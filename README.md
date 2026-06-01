@@ -34,9 +34,9 @@
 ./build/native/nativeCompile/webhook-sample
 ```
 
-## 通用格式
+## 上报信息类接口
 
-大部分 `POST` 接口使用统一请求格式：
+上报信息类接口使用统一请求格式：
 
 ```json
 {
@@ -82,7 +82,7 @@
 }
 ```
 
-## 事件回调接口
+### 事件回调接口
 
 | 方法 | 路径 | 功能 |
 | --- | --- | --- |
@@ -95,18 +95,18 @@
 | POST | `/webhook/events/device/hms` | 设备 HMS 告警回调，打印 `device_sn` 和 `data.list[].message` |
 | POST | `/webhook/events/sub-device/hms` | 子设备 HMS 告警回调，打印 `device_sn` 和 `data.list[].message` |
 | POST | `/webhook/events/file-upload-callback` | 文件上传完成回调，打印 `event_id` 和 `file.name` |
-| POST | `/webhook/events/flighttask-progress` | 航线任务进度回调，打印 `event_id` 和 `percent`；当 `result != 0` 时额外打印 `message` |
+| POST | `/webhook/events/flighttask-progress` | 航线任务进度回调，打印 `event_id` 和 `percent`；当 `result != 0` 时额外打印 `message`。执行任务必须实现 |
 
-## 请求类接口
-
-| 方法 | 路径 | 功能 |
-| --- | --- | --- |
-| POST | `/webhook/requests/storage-config-get` | 返回对象存储上传配置，包含 `bucket`、`endpoint`、`region`、`object_key_prefix` 和临时 `credentials` |
-| GET | `/webhook/requests/flighttask-resource-get?event-id=xxx` | 返回航线文件 `sample.kmz` 的 `fingerprint` 和预签名下载 `url` |
-
-## OSD 回调接口
+### OSD 回调接口
 
 | 方法 | 路径 | 功能 |
 | --- | --- | --- |
 | POST | `/webhook/osd/device` | 接收设备 OSD 数据，返回成功响应 |
 | POST | `/webhook/osd/sub-device` | 接收子设备 OSD 数据，返回成功响应 |
+
+## 请求查询类接口
+
+| 方法 | 路径 | 功能 |
+| --- | --- | --- |
+| POST | `/webhook/requests/storage-config-get` | 返回对象存储上传配置，包含 `bucket`、`endpoint`、`region`、`object_key_prefix` 和临时 `credentials`。回传媒体必须实现 |
+| GET | `/webhook/requests/flighttask-resource-get?event-id=xxx` | 返回航线文件 `sample.kmz` 的 `fingerprint` 和预签名下载 `url`。执行任务必须实现 |
