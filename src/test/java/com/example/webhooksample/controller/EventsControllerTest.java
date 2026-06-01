@@ -69,6 +69,19 @@ class EventsControllerTest {
                 .andExpect(jsonPath("$.message").value("success"));
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "/webhook/events/flighttask-progress"
+    })
+    void flighttaskProgressReturnsSuccess(String path) throws Exception {
+        mockMvc.perform(post(path)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(flighttaskProgressRequest()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"));
+    }
+
     private String progressRequest() {
         return """
                 {
@@ -89,6 +102,46 @@ class EventsControllerTest {
                     },
                     "result": 0,
                     "result_message": "ok"
+                  }
+                }
+                """;
+    }
+
+    private String flighttaskProgressRequest() {
+        return """
+                {
+                  "timestamp": 1654070968655,
+                  "retry": 0,
+                  "device_sn": "xxx",
+                  "data": {
+                    "event_id": "flight_id",
+                    "output": {
+                      "ext": {
+                        "break_point": {
+                          "attitude_head": 30,
+                          "break_reason": 1,
+                          "height": 100.23,
+                          "index": 1,
+                          "latitude": 23.4,
+                          "longitude": 113.99,
+                          "progress": 0.34,
+                          "state": 0,
+                          "wayline_id": 0
+                        },
+                        "current_waypoint_index": 3,
+                        "flight_id": "flight_id",
+                        "media_count": 6,
+                        "track_id": "track_id",
+                        "wayline_id": 0,
+                        "wayline_mission_state": 9
+                      },
+                      "progress": {
+                        "current_step": 19,
+                        "percent": 100
+                      },
+                      "status": "ok"
+                    },
+                    "result": 0
                   }
                 }
                 """;

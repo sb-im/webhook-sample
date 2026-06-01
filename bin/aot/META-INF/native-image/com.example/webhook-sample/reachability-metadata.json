@@ -294,6 +294,12 @@
           ]
         },
         {
+          "name": "flighttaskProgress",
+          "parameterTypes": [
+            "com.example.webhooksample.model.CommonRequest"
+          ]
+        },
+        {
           "name": "subDeviceHms",
           "parameterTypes": [
             "com.example.webhooksample.model.CommonRequest"
@@ -445,6 +451,55 @@
       "methods": [
         {
           "name": "name",
+          "parameterTypes": [ ]
+        }
+      ]
+    },
+    {
+      "type": "com.example.webhooksample.model.FlighttaskProgress",
+      "allDeclaredFields": true,
+      "allDeclaredConstructors": true,
+      "methods": [
+        {
+          "name": "event_id",
+          "parameterTypes": [ ]
+        },
+        {
+          "name": "message",
+          "parameterTypes": [ ]
+        },
+        {
+          "name": "output",
+          "parameterTypes": [ ]
+        },
+        {
+          "name": "result",
+          "parameterTypes": [ ]
+        },
+        {
+          "name": "result_message",
+          "parameterTypes": [ ]
+        }
+      ]
+    },
+    {
+      "type": "com.example.webhooksample.model.FlighttaskProgressOutput",
+      "allDeclaredFields": true,
+      "allDeclaredConstructors": true,
+      "methods": [
+        {
+          "name": "progress",
+          "parameterTypes": [ ]
+        }
+      ]
+    },
+    {
+      "type": "com.example.webhooksample.model.FlighttaskProgressStep",
+      "allDeclaredFields": true,
+      "allDeclaredConstructors": true,
+      "methods": [
+        {
+          "name": "percent",
           "parameterTypes": [ ]
         }
       ]

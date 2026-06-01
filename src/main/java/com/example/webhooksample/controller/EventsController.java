@@ -4,6 +4,7 @@ import com.example.webhooksample.common.ApiResponse;
 import com.example.webhooksample.model.CommonProgress;
 import com.example.webhooksample.model.CommonRequest;
 import com.example.webhooksample.model.FileUploadCallback;
+import com.example.webhooksample.model.FlighttaskProgress;
 import com.example.webhooksample.model.HmsData;
 import com.example.webhooksample.model.HmsMessage;
 import jakarta.validation.Valid;
@@ -79,6 +80,26 @@ public class EventsController {
         return ApiResponse.success(null);
     }
 
+    @PostMapping("/flighttask-progress")
+    public ApiResponse<Void> flighttaskProgress(@Valid @RequestBody CommonRequest<FlighttaskProgress> request) {
+        FlighttaskProgress data = request.data();
+        if (Integer.valueOf(0).equals(data.result())) {
+            LOGGER.info(
+                    "Webhook event=flighttask-progress event_id={} percent={}",
+                    data.event_id(),
+                    flighttaskPercent(data)
+            );
+        } else {
+            LOGGER.info(
+                    "Webhook event=flighttask-progress event_id={} percent={} message={}",
+                    data.event_id(),
+                    flighttaskPercent(data),
+                    flighttaskMessage(data)
+            );
+        }
+        return ApiResponse.success(null);
+    }
+
     private void logProgress(String event, CommonProgress request) {
         LOGGER.info(
                 "Webhook event={} event_id={} result={} percent={} result_message={}",
@@ -88,6 +109,20 @@ public class EventsController {
                 request.output().progress().percent(),
                 request.result_message()
         );
+    }
+
+    private Integer flighttaskPercent(FlighttaskProgress data) {
+        if (data.output() == null || data.output().progress() == null) {
+            return null;
+        }
+        return data.output().progress().percent();
+    }
+
+    private String flighttaskMessage(FlighttaskProgress data) {
+        if (data.result_message() != null && !data.result_message().isBlank()) {
+            return data.result_message();
+        }
+        return data.message();
     }
 
     private void logHmsMessages(String event, CommonRequest<HmsData> request) {
