@@ -82,8 +82,6 @@
 }
 ```
 
-### 事件回调接口
-
 | 方法 | 路径 | 功能 |
 | --- | --- | --- |
 | POST | `/webhook/events/cover-open` | 舱盖打开进度回调，打印 `event_id`、`result`、`percent`、`result_message` |
@@ -96,11 +94,6 @@
 | POST | `/webhook/events/sub-device/hms` | 子设备 HMS 告警回调，打印 `device_sn` 和 `data.list[].message` |
 | POST | `/webhook/events/file-upload-callback` | 文件上传完成回调，打印 `event_id` 和 `file.name` |
 | POST | `/webhook/events/flighttask-progress` | 航线任务进度回调，打印 `event_id` 和 `percent`；当 `result != 0` 时额外打印 `message`。执行任务必须实现 |
-
-### OSD 回调接口
-
-| 方法 | 路径 | 功能 |
-| --- | --- | --- |
 | POST | `/webhook/osd/device` | 接收设备 OSD 数据，返回成功响应 |
 | POST | `/webhook/osd/sub-device` | 接收子设备 OSD 数据，返回成功响应 |
 
