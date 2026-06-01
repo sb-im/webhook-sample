@@ -1,0 +1,65 @@
+{
+  "groups": [
+    {
+      "name": "minio",
+      "type": "com.example.webhooksample.config.MinioProperties",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "minio.access-key",
+      "type": "java.lang.String",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    },
+    {
+      "name": "minio.bucket",
+      "type": "java.lang.String",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    },
+    {
+      "name": "minio.endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    },
+    {
+      "name": "minio.region",
+      "type": "java.lang.String",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    },
+    {
+      "name": "minio.secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    },
+    {
+      "name": "minio.sts-duration-seconds",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    },
+    {
+      "name": "minio.sts-endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    },
+    {
+      "name": "minio.sts-policy",
+      "type": "java.lang.String",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    },
+    {
+      "name": "minio.sts-role-arn",
+      "type": "java.lang.String",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    },
+    {
+      "name": "minio.sts-role-session-name-prefix",
+      "type": "java.lang.String",
+      "sourceType": "com.example.webhooksample.config.MinioProperties"
+    }
+  ],
+  "hints": [],
+  "ignored": {
+    "properties": []
+  }
+}
