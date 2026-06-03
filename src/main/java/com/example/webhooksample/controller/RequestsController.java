@@ -1,17 +1,12 @@
 package com.example.webhooksample.controller;
 
 import com.example.webhooksample.common.ApiResponse;
-import com.example.webhooksample.model.CommonRequest;
-import com.example.webhooksample.model.StorageConfigRequest;
 import com.example.webhooksample.model.StorageConfigResponse;
 import com.example.webhooksample.model.WaylineFileResponse;
 import com.example.webhooksample.service.StorageConfigService;
 import com.example.webhooksample.service.WaylineService;
 import io.minio.errors.MinioException;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,9 +23,12 @@ public class RequestsController {
         this.waylineService = waylineService;
     }
 
-    @PostMapping("/storage-config-get")
-    public ApiResponse<StorageConfigResponse> storageConfigGet(@Valid @RequestBody CommonRequest<StorageConfigRequest> request) {
-        return ApiResponse.success(storageConfigService.create(request));
+    @GetMapping("/storage-config-get")
+    public ApiResponse<StorageConfigResponse> storageConfigGet(
+            @RequestParam("module") Integer module,
+            @RequestParam("device-sn") String deviceSn
+    ) {
+        return ApiResponse.success(storageConfigService.create(module, deviceSn));
     }
 
     @GetMapping("/flighttask-resource-get")

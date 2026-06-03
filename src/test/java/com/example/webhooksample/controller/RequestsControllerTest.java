@@ -1,9 +1,9 @@
 package com.example.webhooksample.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -43,8 +42,8 @@ class RequestsControllerTest {
 
     @Test
     void storageConfigGetReturnsMinioStorageConfig() throws Exception {
-        when(storageConfigService.create(any())).thenReturn(new StorageConfigResponse(
-                "xxx",
+        when(storageConfigService.create(any(), anyString())).thenReturn(new StorageConfigResponse(
+                "device-001",
                 "bucket_name",
                 new StorageCredentials(
                         "access_key_id",
@@ -58,22 +57,13 @@ class RequestsControllerTest {
                 "us-east-1"
         ));
 
-        mockMvc.perform(post("/webhook/requests/storage-config-get")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "timestamp": 1710000000000,
-                                  "retry": 0,
-                                  "device_sn": "xxx",
-                                  "data": {
-                                    "module": 1
-                                  }
-                                }
-                                """))
+        mockMvc.perform(get("/webhook/requests/storage-config-get")
+                        .param("module", "1")
+                        .param("device-sn", "device-001"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0))
                 .andExpect(jsonPath("$.message").value("success"))
-                .andExpect(jsonPath("$.data.device_sn").value("xxx"))
+                .andExpect(jsonPath("$.data.device_sn").value("device-001"))
                 .andExpect(jsonPath("$.data.bucket").value("bucket_name"))
                 .andExpect(jsonPath("$.data.credentials.access_key_id").value("access_key_id"))
                 .andExpect(jsonPath("$.data.credentials.access_key_secret").value("access_key_secret"))

@@ -96,5 +96,5 @@
 
 | 方法 | 路径 | 功能 |
 | --- | --- | --- |
-| POST | `/webhook/requests/storage-config-get` | 返回对象存储上传配置，包含 `bucket`、`endpoint`、`region`、`object_key_prefix` 和临时 `credentials`。回传媒体必须实现 |
+| GET | `/webhook/requests/storage-config-get?module=1&device-sn=xxx` | 返回对象存储上传配置，包含 `device_sn`、`bucket`、`endpoint`、`region`、`object_key_prefix` 和临时 `credentials`。回传媒体必须实现 |
 | GET | `/webhook/requests/flighttask-resource-get?event-id=xxx` | 返回航线文件 `sample.kmz` 的 `fingerprint` 和预签名下载 `url`。执行任务必须实现 |

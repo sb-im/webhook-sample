@@ -1,8 +1,6 @@
 package com.example.webhooksample.service;
 
 import com.example.webhooksample.config.MinioProperties;
-import com.example.webhooksample.model.CommonRequest;
-import com.example.webhooksample.model.StorageConfigRequest;
 import com.example.webhooksample.model.StorageConfigResponse;
 import com.example.webhooksample.model.StorageCredentials;
 import java.util.UUID;
@@ -19,11 +17,11 @@ public class StorageConfigService {
         this.credentialService = credentialService;
     }
 
-    public StorageConfigResponse create(CommonRequest<StorageConfigRequest> request) {
+    public StorageConfigResponse create(Integer module, String deviceSn) {
         String objectKeyPrefix = UUID.randomUUID().toString();
-        StorageCredentials credentials = credentialService.create(request, objectKeyPrefix);
+        StorageCredentials credentials = credentialService.create(module, deviceSn, objectKeyPrefix);
         return new StorageConfigResponse(
-                request.device_sn(),
+                deviceSn,
                 properties.getBucket(),
                 credentials,
                 properties.getEndpoint(),

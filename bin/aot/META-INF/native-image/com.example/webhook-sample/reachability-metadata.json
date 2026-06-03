@@ -336,7 +336,8 @@
         {
           "name": "storageConfigGet",
           "parameterTypes": [
-            "com.example.webhooksample.model.CommonRequest"
+            "java.lang.Integer",
+            "java.lang.String"
           ]
         }
       ]
@@ -522,17 +523,6 @@
       "methods": [
         {
           "name": "message",
-          "parameterTypes": [ ]
-        }
-      ]
-    },
-    {
-      "type": "com.example.webhooksample.model.StorageConfigRequest",
-      "allDeclaredFields": true,
-      "allDeclaredConstructors": true,
-      "methods": [
-        {
-          "name": "module",
           "parameterTypes": [ ]
         }
       ]

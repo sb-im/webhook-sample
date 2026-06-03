@@ -1,8 +1,6 @@
 package com.example.webhooksample.service;
 
 import com.example.webhooksample.config.MinioProperties;
-import com.example.webhooksample.model.CommonRequest;
-import com.example.webhooksample.model.StorageConfigRequest;
 import com.example.webhooksample.model.StorageCredentials;
 import io.minio.credentials.AssumeRoleProvider;
 import io.minio.credentials.Credentials;
@@ -19,8 +17,8 @@ public class MinioStsCredentialService implements StorageCredentialService {
     }
 
     @Override
-    public StorageCredentials create(CommonRequest<StorageConfigRequest> request, String objectKeyPrefix) {
-        Credentials credentials = assumeRole(request, objectKeyPrefix);
+    public StorageCredentials create(Integer module, String deviceSn, String objectKeyPrefix) {
+        Credentials credentials = assumeRole(module, deviceSn, objectKeyPrefix);
         return new StorageCredentials(
                 credentials.accessKey(),
                 credentials.secretKey(),
@@ -29,7 +27,7 @@ public class MinioStsCredentialService implements StorageCredentialService {
         );
     }
 
-    private Credentials assumeRole(CommonRequest<StorageConfigRequest> request, String objectKeyPrefix) {
+    private Credentials assumeRole(Integer module, String deviceSn, String objectKeyPrefix) {
         try {
             AssumeRoleProvider provider = new AssumeRoleProvider(
                     properties.getStsEndpoint(),
@@ -39,7 +37,7 @@ public class MinioStsCredentialService implements StorageCredentialService {
                     properties.getStsPolicy(),
                     properties.getRegion(),
                     properties.getStsRoleArn(),
-                    roleSessionName(request, objectKeyPrefix),
+                    roleSessionName(module, deviceSn, objectKeyPrefix),
                     null,
                     null
             );
@@ -49,8 +47,8 @@ public class MinioStsCredentialService implements StorageCredentialService {
         }
     }
 
-    private String roleSessionName(CommonRequest<StorageConfigRequest> request, String objectKeyPrefix) {
-        String raw = String.join("-", properties.getStsRoleSessionNamePrefix(), String.valueOf(request.data().module()), request.device_sn(), objectKeyPrefix);
+    private String roleSessionName(Integer module, String deviceSn, String objectKeyPrefix) {
+        String raw = String.join("-", properties.getStsRoleSessionNamePrefix(), String.valueOf(module), deviceSn, objectKeyPrefix);
         String normalized = raw.replaceAll("[^A-Za-z0-9+=,.@-]", "-");
         return normalized.length() > 64 ? normalized.substring(0, 64) : normalized;
     }
