@@ -491,6 +491,10 @@
         {
           "name": "progress",
           "parameterTypes": [ ]
+        },
+        {
+          "name": "status",
+          "parameterTypes": [ ]
         }
       ]
     },

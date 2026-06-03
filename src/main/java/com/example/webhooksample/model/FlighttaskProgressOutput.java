@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record FlighttaskProgressOutput(
         @Valid
-        FlighttaskProgressStep progress
+        FlighttaskProgressStep progress,
+
+        String status
 ) {
 }

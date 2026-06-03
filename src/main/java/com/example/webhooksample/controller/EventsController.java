@@ -85,15 +85,17 @@ public class EventsController {
         FlighttaskProgress data = request.data();
         if (Integer.valueOf(0).equals(data.result())) {
             LOGGER.info(
-                    "Webhook event=flighttask-progress event_id={} percent={}",
+                    "Webhook event=flighttask-progress event_id={} percent={} status={}",
                     data.event_id(),
-                    flighttaskPercent(data)
+                    flighttaskPercent(data),
+                    flighttaskStatus(data)
             );
         } else {
             LOGGER.info(
-                    "Webhook event=flighttask-progress event_id={} percent={} message={}",
+                    "Webhook event=flighttask-progress event_id={} percent={} status={} message={}",
                     data.event_id(),
                     flighttaskPercent(data),
+                    flighttaskStatus(data),
                     flighttaskMessage(data)
             );
         }
@@ -116,6 +118,13 @@ public class EventsController {
             return null;
         }
         return data.output().progress().percent();
+    }
+
+    private String flighttaskStatus(FlighttaskProgress data) {
+        if (data.output() == null) {
+            return null;
+        }
+        return data.output().status();
     }
 
     private String flighttaskMessage(FlighttaskProgress data) {
