@@ -4,6 +4,8 @@ import com.example.webhooksample.common.ApiResponse;
 import com.example.webhooksample.model.CommonProgress;
 import com.example.webhooksample.model.CommonRequest;
 import com.example.webhooksample.model.FileUploadCallback;
+import com.example.webhooksample.model.FileUploadProgress;
+import com.example.webhooksample.model.FileUploadProgressFile;
 import com.example.webhooksample.model.FlighttaskProgress;
 import com.example.webhooksample.model.HmsData;
 import com.example.webhooksample.model.HmsMessage;
@@ -80,6 +82,19 @@ public class EventsController {
         return ApiResponse.success(null);
     }
 
+    @PostMapping("/fileupload-progress")
+    public ApiResponse<Void> fileUploadProgress(@Valid @RequestBody CommonRequest<FileUploadProgress> request) {
+        for (FileUploadProgressFile file : fileUploadProgressFiles(request.data())) {
+            LOGGER.info(
+                    "Webhook event=fileupload-progress event_id={} key={} progress={}",
+                    request.data().event_id(),
+                    file.key(),
+                    fileUploadProgress(file)
+            );
+        }
+        return ApiResponse.success(null);
+    }
+
     @PostMapping("/flighttask-progress")
     public ApiResponse<Void> flighttaskProgress(@Valid @RequestBody CommonRequest<FlighttaskProgress> request) {
         FlighttaskProgress data = request.data();
@@ -100,6 +115,20 @@ public class EventsController {
             );
         }
         return ApiResponse.success(null);
+    }
+
+    private Iterable<FileUploadProgressFile> fileUploadProgressFiles(FileUploadProgress data) {
+        if (data.output() == null || data.output().ext() == null || data.output().ext().files() == null) {
+            return Collections.emptyList();
+        }
+        return data.output().ext().files();
+    }
+
+    private Integer fileUploadProgress(FileUploadProgressFile file) {
+        if (file.progress() == null) {
+            return null;
+        }
+        return file.progress().progress();
     }
 
     private void logProgress(String event, CommonProgress request) {

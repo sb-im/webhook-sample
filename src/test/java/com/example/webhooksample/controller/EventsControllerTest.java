@@ -82,6 +82,19 @@ class EventsControllerTest {
                 .andExpect(jsonPath("$.message").value("success"));
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "/webhook/events/fileupload-progress"
+    })
+    void fileUploadProgressReturnsSuccess(String path) throws Exception {
+        mockMvc.perform(post(path)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(fileUploadProgressRequest()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"));
+    }
+
     private String progressRequest() {
         return """
                 {
@@ -176,6 +189,39 @@ class EventsControllerTest {
                       "name": "dog.jpeg",
                       "object_key": "object_key",
                       "path": "xxx"
+                    }
+                  }
+                }
+                """;
+    }
+
+    private String fileUploadProgressRequest() {
+        return """
+                {
+                  "timestamp": 1783418735359,
+                  "retry": 0,
+                  "device_sn": "7CTXM9600B01RW",
+                  "data": {
+                    "event_id": "ab08e97c-ca1d-40bb-adba-03195ac1e9f1",
+                    "output": {
+                      "status": "file_uploading",
+                      "ext": {
+                        "files": [
+                          {
+                            "device_sn": "7CTXM9600B01RW",
+                            "key": "3.tar.gz",
+                            "module": "3",
+                            "progress": {
+                              "current_step": 3,
+                              "progress": 41,
+                              "status": "file_uploading",
+                              "total_step": 3,
+                              "upload_rate": 11308968
+                            },
+                            "size": 133156142
+                          }
+                        ]
+                      }
                     }
                   }
                 }
