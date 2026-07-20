@@ -90,8 +90,8 @@
 | POST | `/webhook/events/file-upload-callback` | 文件上传完成回调，打印 `event_id` 和 `file.name` |
 | POST | `/webhook/events/flighttask-progress` | 航线任务进度回调，打印 `event_id` 和 `percent`；当 `result != 0` 时额外打印 `message`。执行任务必须实现 |
 | POST | `/webhook/status/update-topo` | 接收设备拓扑更新回调，`sub_devices` 为空或缺失表示设备上线，非空表示设备和子设备都上线，返回成功响应 |
-| POST | `/webhook/osd/device` | 接收设备 OSD 数据，返回成功响应 |
-| POST | `/webhook/osd/sub-device` | 接收子设备 OSD 数据，返回成功响应 |
+| POST | `/webhook/osd/device` | 接收设备 OSD 数据，返回成功响应；[`data` 字段说明](src/main/java/com/example/webhooksample/controller/OsdController.md) |
+| POST | `/webhook/osd/sub-device` | 接收子设备 OSD 数据，返回成功响应；[`data` 字段说明](src/main/java/com/example/webhooksample/controller/OsdController.md#子设备-osd) |
 
 ## 请求查询类接口
 
